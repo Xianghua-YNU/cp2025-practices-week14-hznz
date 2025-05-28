@@ -144,7 +144,7 @@ def analyze_period(t: np.ndarray, states: np.ndarray) -> float:
     
     # 计算相邻过零点的时间差
     periods = np.diff(t[zero_crossings])
-    return np.mean(periods) * 2  # 相邻过零点间隔为半周期
+    return np.mean(periods)  # 修复：相邻过零点间隔即为完整周期，无需乘以2
 
 # ---------------------------- 主程序 ----------------------------
 def main():
@@ -162,7 +162,6 @@ def main():
     plot_phase_space(states_harmonic, 'Harmonic Oscillator: Phase Space')
     
     # ========== 任务2：振幅对周期的影响 ==========
-    # 测试不同初始振幅：1.0, 2.0, 3.0
     amplitudes = [1.0, 2.0, 3.0]
     print("简谐振子周期分析：")
     for amp in amplitudes:

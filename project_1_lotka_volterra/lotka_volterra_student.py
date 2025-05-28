@@ -247,8 +247,11 @@ def main():
         print("\n4. 数值结果统计:")
         print(f"猎物数量范围: [{np.min(x):.2f}, {np.max(x):.2f}]")
         print(f"捕食者数量范围: [{np.min(y):.2f}, {np.max(y):.2f}]")
-        period = np.argmax(np.diff(np.sign(np.diff(x))) != 0) + 1
-        print(f"估计振荡周期: {t[period]:.2f} 时间单位")
+        from scipy.signal import find_peaks
+        peaks_x, _ = find_peaks(x, height=np.mean(x))
+        if len(peaks_x) > 1:
+            period = np.mean(np.diff(t[peaks_x]))
+            print(f"估计周期: {period:.3f}")
         
     except Exception as e:
         print(f"\n运行时发生错误: {e}")
